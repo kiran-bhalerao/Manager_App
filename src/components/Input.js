@@ -18,8 +18,8 @@ const Input = ({
       value={value}
       placeholder={placeholder}
       autoCorrect={false}
-      secureTextEntry={secureTextEntry}
-      autoFocus={autoFocus}
+      secureTextEntry={secureTextEntry || false}
+      autoFocus={autoFocus || false}
     />
   </View>
 );

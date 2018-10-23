@@ -15,9 +15,7 @@ const styles = {
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "purple",
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 5
+    margin: 5
   },
   textStyle: {
     alignSelf: "center",
