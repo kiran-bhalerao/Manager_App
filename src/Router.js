@@ -13,7 +13,6 @@ const RouterComponent = () => (
         component={EmployeeList}
         title="Employees"
         type="replace"
-        initial
         rightTitle="Add"
         onRight={() => Actions.createEmployee()}
       />

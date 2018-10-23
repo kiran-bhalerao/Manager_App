@@ -1,19 +1,11 @@
-import { EMPLOYEE_UPDATE } from "../actions/types";
+import { EMPLOYEE_FETCHED } from "../actions/types";
 
-const INITAL_STATE = {
-  name: "",
-  email: "",
-  phone: "",
-  shift: ""
-};
+const INITIAL_STATE = {};
 
-export default (state = INITAL_STATE, action) => {
+export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case EMPLOYEE_UPDATE:
-      return {
-        ...state,
-        [action.payload.prop]: action.payload.value
-      };
+    case EMPLOYEE_FETCHED:
+      return action.payload;
     default:
       return state;
   }

@@ -24,7 +24,9 @@ class EmployeeCreate extends Component {
   };
 
   onSave = () => {
-    alert(this.props.name + " " + this.props.shift);
+    // alert(this.props.name + " " + this.props.shift);
+    const { name, email, phone, shift } = this.props;
+    this.props.employeeCreate({ name, email, phone, shift });
   };
 
   render() {
@@ -33,7 +35,7 @@ class EmployeeCreate extends Component {
         <CardSection>
           <Input
             label="Name"
-            placeholder="Albert"
+            placeholder="User"
             onChangeText={this.nameChanged}
             value={this.props.name}
             autoFocus={true}
@@ -70,7 +72,7 @@ class EmployeeCreate extends Component {
 }
 const mapStateToProps = state => {
   return {
-    ...state.employee
+    ...state.employeeFrom
   };
 };
 
