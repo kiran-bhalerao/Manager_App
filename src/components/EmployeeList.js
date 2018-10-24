@@ -1,13 +1,31 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  TouchableOpacity,
+  UIManager,
+  Platform
+} from "react-native";
 import { connect } from "react-redux";
 import { employeeFetch } from "../actions/EmployeeAction";
 import CardSection from "./CardSection";
 import Card from "./Card";
 
 import _ from "lodash";
+import { Actions } from "react-native-router-flux";
 
 class EmployeeList extends Component {
+
+  // show Animation in android
+  constructor(props) {
+    super(props);
+    if (Platform.OS === "android") {
+      UIManager.setLayoutAnimationEnabledExperimental &&
+        UIManager.setLayoutAnimationEnabledExperimental(true);
+    }
+  }
+
   UNSAFE_componentWillMount = () => {
     this.props.employeeFetch();
     // this.cerateDataSource(this.props);
@@ -36,13 +54,11 @@ class EmployeeList extends Component {
   // render it -listview
   // <ListView dataSource={this.dataSource} renderRow={this.renderData} />
 
-  onItemClick = item => {
-    alert(item.name);
-  };
-
   renderItem = ({ item }) => {
     return (
-      <TouchableOpacity onPress={this.onItemClick.bind(this, item)}>
+      <TouchableOpacity
+        onPress={() => Actions.createEmployee({ employee: item })}
+      >
         <CardSection key={item.uid}>
           <Text style={styles.textStyle}>{item.name}</Text>
         </CardSection>
@@ -60,6 +76,7 @@ class EmployeeList extends Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   // convert object to list to render list
   const employees = _.map(state.employees, (val, uid) => {

@@ -1,70 +1,29 @@
 import React, { Component } from "react";
-import { View, Text, Picker } from "react-native";
 import Card from "./Card";
 import CardSection from "./CardSection";
-import Input from "./Input";
 import Button from "./Button";
-import ShiftPicker from "./ShiftPicker";
 import { connect } from "react-redux";
 import * as Actions from "../actions/EmployeeAction";
+import EmployeeForm from "./EmployeeForm";
 
 class EmployeeCreate extends Component {
-  nameChanged = name => {
-    this.props.employeeUpdate({ prop: "name", value: name });
-  };
-  emailChanged = email => {
-    this.props.employeeUpdate({ prop: "email", value: email });
-  };
-  phoneChanged = phone => {
-    this.props.employeeUpdate({ prop: "phone", value: phone });
-  };
-
-  shiftChanged = shift => {
-    this.props.employeeUpdate({ prop: "shift", value: shift });
-  };
-
   onSave = () => {
-    // alert(this.props.name + " " + this.props.shift);
     const { name, email, phone, shift } = this.props;
-    this.props.employeeCreate({ name, email, phone, shift });
+    if (name != "" && email != "" && phone != "")
+      this.props.employeeCreate({
+        name: name.trim(),
+        email: email.trim(),
+        phone: phone.trim(),
+        shift
+      });
   };
 
   render() {
     return (
       <Card>
+        <EmployeeForm {...this.props} />
         <CardSection>
-          <Input
-            label="Name"
-            placeholder="User"
-            onChangeText={this.nameChanged}
-            value={this.props.name}
-            autoFocus={true}
-          />
-        </CardSection>
-        <CardSection>
-          <Input
-            label="Email"
-            placeholder="user@gmail.com"
-            onChangeText={this.emailChanged}
-            value={this.props.email}
-          />
-        </CardSection>
-        <CardSection>
-          <Input
-            label="Phone"
-            placeholder="222-222-2222"
-            onChangeText={this.phoneChanged}
-            value={this.props.phone}
-          />
-        </CardSection>
-        <CardSection>
-          <ShiftPicker
-            onValueChange={this.shiftChanged}
-            value={this.props.shift}
-          />
-        </CardSection>
-        <CardSection>
-          <Button onPress={this.onSave}>SAVE</Button>
+          <Button onPress={this.onSave}>CREATE</Button>
         </CardSection>
       </Card>
     );
