@@ -5,6 +5,7 @@ import Button from "./Button";
 import { connect } from "react-redux";
 import * as Actions from "../actions/EmployeeAction";
 import EmployeeForm from "./EmployeeForm";
+import { EMPLOYEE_INIT } from "../actions/types";
 
 class EmployeeCreate extends Component {
   onSave = () => {

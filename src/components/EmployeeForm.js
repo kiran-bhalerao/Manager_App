@@ -30,7 +30,6 @@ class EmployeeForm extends Component {
             placeholder="User"
             onChangeText={this.nameChanged}
             value={this.props.name}
-            autoFocus={true}
           />
         </CardSection>
         <CardSection>

@@ -1,4 +1,4 @@
-import { EMPLOYEE_UPDATE, EMPLOYEE_CREATED, EMPLOYEE_FETCHED } from "./types";
+import { EMPLOYEE_UPDATE, EMPLOYEE_CREATED, EMPLOYEE_FETCHED , EMPLOYEE_INIT} from "./types";
 import firebase from "@firebase/app";
 import "@firebase/auth";
 import "@firebase/database";
@@ -32,6 +32,7 @@ export const employeeCreate = ({ name, email, phone, shift }) => {
   };
 };
 
+// This is watcher - every time data get change or updated this will call
 export const employeeFetch = () => {
   const { currentUser } = firebase.auth();
 
@@ -44,6 +45,37 @@ export const employeeFetch = () => {
           type: EMPLOYEE_FETCHED,
           payload: snapshot.val()
         });
+      });
+  };
+};
+
+export const employeeSave = ({ name, email, phone, shift, uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`/users/${currentUser.uid}/employees/${uid}`)
+      .set({ name, email, phone, shift })
+      .then(() => {
+        dispatch({ type: EMPLOYEE_CREATED });
+        Actions.employeeList();
+      });
+  };
+};
+
+
+export const employeeDelete = ({ uid }) => {
+  const { currentUser } = firebase.auth();
+
+  return dispatch => {
+    firebase
+      .database()
+      .ref(`/users/${currentUser.uid}/employees/${uid}`)
+      .remove()
+      .then(() => {
+        dispatch({ type: EMPLOYEE_INIT });
+        Actions.employeeList();
       });
   };
 };
